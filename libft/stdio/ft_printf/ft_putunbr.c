@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ctype.h                                         :+:      :+:    :+:   */
+/*   ft_putunbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 20:12:34 by vscode            #+#    #+#             */
-/*   Updated: 2025/10/06 22:07:13 by homura           ###   ########.fr       */
+/*   Created: 2025/06/22 17:23:15 by homura            #+#    #+#             */
+/*   Updated: 2025/06/22 17:28:07 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CTYPE_H
-# define FT_CTYPE_H
+#include "ft_printf.h"
 
-# include <limits.h>
+int	ft_putunbr(unsigned int n)
+{
+	int	len;
+	int	digit;
 
-int		ft_isalnum(int c);
-int		ft_isalpha(int c);
-int		ft_isascii(int c);
-int		ft_isdigit(int c);
-int		ft_isprint(int c);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
-int		ft_isspace(int c);
-int		ft_isstrspace(char *str);
-int		ft_isint(char *str);
-
-
-#endif
+	len = 0;
+	if (n >= 10)
+		len += ft_putunbr(n / 10);
+	digit = '0' + (n % 10);
+	if (write(1, &digit, 1) == -1)
+		return (-1);
+	len++;
+	return (len);
+}

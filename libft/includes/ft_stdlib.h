@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 20:12:34 by vscode            #+#    #+#             */
-/*   Updated: 2025/09/29 00:26:54 by homura           ###   ########.fr       */
+/*   Updated: 2025/10/06 22:01:41 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_itoa(int n);
+long	ft_strtol(const char *str);
 
 #endif

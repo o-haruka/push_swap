@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ctype.h                                         :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 20:12:34 by vscode            #+#    #+#             */
-/*   Updated: 2025/10/06 22:07:13 by homura           ###   ########.fr       */
+/*   Created: 2025/06/22 17:21:25 by homura            #+#    #+#             */
+/*   Updated: 2025/06/22 18:06:02 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CTYPE_H
-# define FT_CTYPE_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include <limits.h>
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdint.h>
 
-int		ft_isalnum(int c);
-int		ft_isalpha(int c);
-int		ft_isascii(int c);
-int		ft_isdigit(int c);
-int		ft_isprint(int c);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
-int		ft_isspace(int c);
-int		ft_isstrspace(char *str);
-int		ft_isint(char *str);
-
+int	ft_printf(const char *format, ...);
+int	ft_putchar(int c);
+int	ft_putstr(char *s);
+int	ft_putptr(uintptr_t nb);
+int	ft_print_nbr(int n);
+int	ft_putunbr(unsigned int n);
+int	ft_puthex_lower(unsigned int nb);
+int	ft_puthex_upper(unsigned int nb);
 
 #endif

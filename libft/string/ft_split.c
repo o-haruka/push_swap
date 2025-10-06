@@ -6,7 +6,7 @@
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:32:17 by vscode            #+#    #+#             */
-/*   Updated: 2025/10/01 00:47:59 by homura           ###   ########.fr       */
+/*   Updated: 2025/10/06 00:18:13 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,4 @@ char	**ft_split(char const *s, char c)
 	result[j] = NULL;
 	return (result);
 }
+

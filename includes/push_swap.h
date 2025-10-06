@@ -1,6 +1,8 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# include <stddef.h>
+
 typedef struct s_node {
     int value;
     struct s_node *next;
@@ -9,6 +11,7 @@ typedef struct s_node {
 // 基本操作
 void push_front(t_node **stack, int value);
 int  pop_front(t_node **stack);
+void free_stack(t_node **stack);
 
 // 命令
 void sa(t_node **a);
@@ -29,5 +32,13 @@ void radix_sort(t_node **a, t_node **b, int size);
 
 // その他
 int  list_size(t_node *a);
+
+// エラー処理
+void	error_exit(void);
+// void	validate_arguments(int argc, char **argv);
+int	check_args(int argc, char **argv);
+// int		has_duplicates(int *arr, int size);
+int	check_duplicate(int *args, size_t counter);
+void	free_split_array(char **arr);
 
 #endif

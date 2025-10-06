@@ -6,6 +6,7 @@ CFLAGS		= -Wall -Werror -Wextra -g
 SRC_PATH	= srcs
 SRC			= main.c \
 			operations.c \
+			error.c
 			
 # 				check_args.c \
 # 				dock_init.c \
@@ -70,5 +71,8 @@ tester: all
 
 visual: all
 	@ bash shell_script/pain.sh
+
+leaks: all
+	@ leaks -atExit -- ./push_swap 3 2 1 5 9 0
 
 .PHONY : all clean fclean re

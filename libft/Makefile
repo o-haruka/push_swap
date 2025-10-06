@@ -6,7 +6,7 @@
 #    By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 20:36:41 by vscode            #+#    #+#              #
-#    Updated: 2025/10/01 17:57:50 by homura           ###   ########.fr        #
+#    Updated: 2025/10/06 22:05:50 by homura           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ ft_isascii.c \
 ft_isprint.c \
 ft_toupper.c \
 ft_tolower.c \
+ft_isspace.c \
+ft_isstrspace.c \
+ft_isint.c \
 
 LIST_SRC = \
 ft_lstnew.c \
@@ -40,11 +43,19 @@ ft_putchar_fd.c \
 ft_putstr_fd.c \
 ft_putendl_fd.c \
 ft_putnbr_fd.c \
+ft_printf/ft_printf.c \
+ft_printf/ft_putchar.c \
+ft_printf/ft_puthex.c \
+ft_printf/ft_putnbr.c \
+ft_printf/ft_putptr.c \
+ft_printf/ft_putstr.c \
+ft_printf/ft_putunbr.c \
 
 STDLIB_SRC = \
 ft_calloc.c \
 ft_atoi.c \
 ft_itoa.c \
+ft_strtol.c \
 
 STRING_SRC = \
 ft_bzero.c \
@@ -83,6 +94,9 @@ STDLIB_SRCS = $(addprefix $(STDLIB_PATH)/, $(STDLIB_SRC))
 STRING_PATH = string
 STRING_SRCS = $(addprefix $(STRING_PATH)/, $(STRING_SRC))
 
+# PRINTF_PATH = stdio/ft_printf
+# PRINTF = libftprintf.a
+
 SRCS = $(CTYPE_SRCS) \
 		$(LIST_SRCS) \
 		$(STDIO_SRCS) \
@@ -96,7 +110,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ ar rcs $(NAME) $(OBJ)
 # 	@ make -C $(PRINTF_PATH)
-# 	@ mv $(PRINTF_PATH)/$(PRINTF) ./$(NAME)
+# 	@ cp $(PRINTF_PATH)/$(PRINTF) ./$(NAME)
 
 # %.o: %.c $(HEADER)
 # 	$(CC) $(CFLAGS) -c $< -o $@
@@ -107,9 +121,11 @@ $(NAME): $(OBJ)
 # 	@ $(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
 clean:
+# 	@ make clean -C $(PRINTF_PATH)
 	rm -f $(OBJ)
 
 fclean: clean
+# 	@ make fclean -C $(PRINTF_PATH)
 	rm -f $(NAME)
 
 re: fclean all

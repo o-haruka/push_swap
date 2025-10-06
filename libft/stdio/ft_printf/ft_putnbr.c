@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ctype.h                                         :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 20:12:34 by vscode            #+#    #+#             */
-/*   Updated: 2025/10/06 22:07:13 by homura           ###   ########.fr       */
+/*   Created: 2025/06/22 17:22:18 by homura            #+#    #+#             */
+/*   Updated: 2025/06/24 13:49:27 by homura           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CTYPE_H
-# define FT_CTYPE_H
+#include "ft_printf.h"
 
-# include <limits.h>
+int	ft_print_nbr(int n)
+{
+	int		len;
+	long	num;
+	char	digit;
 
-int		ft_isalnum(int c);
-int		ft_isalpha(int c);
-int		ft_isascii(int c);
-int		ft_isdigit(int c);
-int		ft_isprint(int c);
-int		ft_toupper(int c);
-int		ft_tolower(int c);
-int		ft_isspace(int c);
-int		ft_isstrspace(char *str);
-int		ft_isint(char *str);
-
-
-#endif
+	len = 0;
+	if (n == 0)
+	{
+		ft_putchar('0');
+		return (1);
+	}
+	num = n;
+	if (num < 0)
+	{
+		ft_putchar('-');
+		len++;
+		num = -num;
+	}
+	if (num >= 10)
+		len += ft_print_nbr(num / 10);
+	digit = '0' + (num % 10);
+	ft_putchar(digit);
+	len++;
+	return (len);
+}
