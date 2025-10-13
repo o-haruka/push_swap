@@ -7,20 +7,6 @@ SRC_PATH	= srcs
 SRC			= main.c \
 			operations.c \
 			error.c
-			
-# 				check_args.c \
-# 				dock_init.c \
-# 				error_message.c \
-# 				free.c \
-# 				push.c \
-# 				put_args.c \
-# 				put_stack.c \
-# 				rev_rotate.c \
-# 				rotate.c \
-# 				sand_clock.c \
-# 				sort_num.c \
-# 				sort.c \
-# 				swap.c \
 
 SRCS		= $(addprefix $(SRC_PATH)/, $(SRC))
 
@@ -37,11 +23,6 @@ LIB			= libft.a
 LIBS		= $(addprefix $(LIB_PATH)/, $(LIB))
 
 RM			= rm -f
-
-# CHECK		= \033[32m[✔]\033[0m
-# REMOVE		= \033[31m[✘]\033[0m
-# BLUE		= \033[1;34m
-# RESET		= \033[0m
 
 all : $(NAME)
 
