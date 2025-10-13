@@ -10,7 +10,7 @@ int	ft_isint(char *str)
 	size_t	i;
 
 	i = 0;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (str[i] == '\0')
 		return (0);
