@@ -6,7 +6,9 @@ CFLAGS		= -Wall -Werror -Wextra -g
 SRC_PATH	= srcs
 SRC			= main.c \
 			operations.c \
-			error.c
+			error.c \
+			free.c \
+			stack_utils.c \
 
 SRCS		= $(addprefix $(SRC_PATH)/, $(SRC))
 
@@ -29,7 +31,6 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	@ make -C $(LIB_PATH)
 	@ $(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
-	@echo "$(CHECK) $(BLUE)Compiling push_swap... $(RESET)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCS)
 	@ mkdir -p $(OBJ_PATH)
@@ -43,15 +44,12 @@ clean:
 fclean: clean
 	@ make fclean -C $(LIB_PATH)
 	@ $(RM) $(NAME)
-	@echo "$(REMOVE) $(BLUE)Remove push_swap... $(RESET)"
+	
 
 re: fclean all
 
 tester: all
 	@ bash shell_script/test.sh
-
-visual: all
-	@ bash shell_script/pain.sh
 
 leaks: all
 	@ leaks -atExit -- ./push_swap 3 2 1 5 9 0

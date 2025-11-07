@@ -20,19 +20,6 @@ void    error_exit(void)
     exit(1);
 }
 
-void	free_split_array(char **arr)
-{
-    int	i;
-
-    if (!arr)
-        return;
-    i = 0;
-    while (arr[i])
-        free(arr[i++]);
-    free(arr);
-}
-
-
 //====================================================================
 // argv[1]（コマンドライン引数の1つめ）をスペースで分割し、split に格納。
 // 例: "12 34 56" → ["12", "34", "56"]

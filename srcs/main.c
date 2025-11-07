@@ -1,37 +1,9 @@
 #include "../libft/includes/libft.h"
 #include "../libft/stdio/ft_printf/ft_printf.h"
 #include "../includes/push_swap.h"
-
-#include <stdio.h>
 #include <stdlib.h>
 
-/* -------------------------
-   基本スタック操作
-   ------------------------- */
-void push_front(t_node **stack, int value) {
-    t_node *new = malloc(sizeof(t_node));
-    if (!new) exit(1);
-    new->value = value;
-    new->next = *stack;
-    *stack = new;
-}
 
-int pop_front(t_node **stack) {
-    if (!*stack) return 0;
-    t_node *tmp = *stack;
-    int val = tmp->value;
-    *stack = tmp->next;
-    free(tmp);
-    return val;
-}
-
-void free_stack(t_node **stack) {
-    while (*stack) {
-        t_node *tmp = *stack;
-        *stack = (*stack)->next;
-        free(tmp);
-    }
-}
 
 /* -------------------------
    小さいケース用
@@ -126,14 +98,18 @@ int get_max(t_node *a) {
 
 /* O(n^2) だが n<=500 なので十分 */
 void index_stack(t_node *a, int *arr, int size) {
-    for (int i = 0; i < size; i++) {
+    int i = 0;
+    while (i < size) {
         int rank = 0;
-        for (int j = 0; j < size; j++) {
+        int j = 0;
+        while (j < size) {
             if (arr[j] < arr[i])
                 rank++;
+            j++;
         }
         a->value = rank;
         a = a->next;
+        i++;
     }
 }
 
@@ -161,140 +137,92 @@ void radix_sort(t_node **a, t_node **b, int size) {
 }
 
 /* -------------------------
-   main
+   main整頓用関数
    ------------------------- */
-int main(int argc, char **argv) {
-    if (argc < 2) 
-        return 0;
-
-    if(check_args(argc, argv) == 1)
-        error_exit();
-
-    t_node *a = NULL;
-    t_node *b = NULL;
-    
-    int *arr;
-    int size;
-    
-    // 引数が1つの場合（スペース区切りの文字列）
-    if (argc == 2) {
-        char **split = ft_split(argv[1], ' ');
-        if (!split)
-            return 1;
-            
-        // 分割された要素数を数える
-        size = 0;
-        while (split[size])
-            size++;
-            
-        if (size == 0) {
-            free(split);
-            return 0;
-        }
-            
-        arr = malloc(sizeof(int) * size);
-        if (!arr) {
-            free_split_array(split);
-            return 1;
-        }
-        
-        // 分割された文字列を整数に変換
-        for (int i = 0; i < size; i++) {
-            arr[i] = ft_atoi(split[i]);
-        }
-        
-        free_split_array(split);
+// int配列からスタックAを逆順で初期化
+void init_stack_a(t_node **a, int *arr, int size) {
+    int j;
+    j = size - 1;
+    while(0 <= j){
+        push_front(a, arr[j]);
+        j--;
     }
-    // 引数が複数の場合
-    else {
-        size = argc - 1;
-        arr = malloc(sizeof(int) * size);
-        if (!arr) return 1;
+}
 
-        // 配列に変換して保存
-        for (int i = 0; i < size; i++) {
-            arr[i] = ft_atoi(argv[i + 1]);
-        }
-    }
-
-    // 重複チェック
-    if (check_duplicate(arr, size))
-        error_exit();
-
-    // スタックAに逆順で追加
-    for (int j = size - 1; j >= 0; j--) {
-        push_front(&a, arr[j]);
-    }
-
-    /* 値を順位（0..size-1）に変換 */
-    index_stack(a, arr, size);
-
+// ソート処理を分岐して実行
+void do_sort(t_node **a, t_node **b, int size) {
     if (size == 1) {
         /* nothing */
     } else if (size == 2) {
-        if (a->value > a->next->value)
-            sa(&a);
+        if ((*a)->value > (*a)->next->value)
+            sa(a);
     } else if (size <= 5) {
-        sort_small(&a, &b);
+        sort_small(a, b);
     } else {
-        radix_sort(&a, &b, size);
+        radix_sort(a, b, size);
     }
+}
 
+static int parse_args_split(char *arg, int **arr, int *size) {
+    char **split = ft_split(arg, ' ');
+    if (!split)
+        return 1;
+    *size = 0;
+    while (split[*size])
+        (*size)++;
+    if (*size == 0) {
+        free(split);
+        return 1;
+    }
+    *arr = malloc(sizeof(int) * (*size));
+    if (!*arr) {
+        free_split_array(split);
+        return 1;
+    }
+    int i = 0;
+    while (i < *size) {
+        (*arr)[i] = ft_atoi(split[i]);
+        i++;
+    }
+    free_split_array(split);
+    return 0;
+}
+
+int parse_args(int argc, char **argv, int **arr, int *size) {
+    if (argc == 2)
+        return parse_args_split(argv[1], arr, size);
+    *size = argc - 1;
+    *arr = malloc(sizeof(int) * (*size));
+    if (!*arr) return 1;
+    int i = 0;
+    while (i < *size) {
+        (*arr)[i] = ft_atoi(argv[i + 1]);
+        i++;
+    }
+    return 0;
+}
+
+/* -------------------------
+   main
+   ------------------------- */
+int main(int argc, char **argv) {
+    if (argc < 2)
+        return 0;
+    if (check_args(argc, argv) == 1)
+        error_exit();
+    t_node *a = NULL;
+    t_node *b = NULL;
+    int *arr;
+    int size;
+    if (parse_args(argc, argv, &arr, &size) == 1)
+        return 1;
+    if (check_duplicate(arr, size) == 1)
+        error_exit();
+    init_stack_a(&a, arr, size);
+    index_stack(a, arr, size);
+    do_sort(&a, &b, size);
     free(arr);
     free_stack(&a);
     free_stack(&b);
     return 0;
 }
-// int main(int argc, char **argv) {
-//     if (argc < 2) 
-//         return 0;
-
-//     // validate_arguments(argc, argv);
-//     if(check_args(argc, argv) == 1)
-//         error_exit();
-
-//     t_node *a = NULL;
-//     t_node *b = NULL;
-
-//     int size = argc - 1;
-//     int *arr = malloc(sizeof(int) * size);
-//     if (!arr) return 1;
-
-//     // 配列に変換して保存
-//     int i = 0;
-//     while(i < size){
-//         arr[i] = ft_atoi(argv[i + 1]);
-//         i++;
-//     }
-
-//     // 重複チェック
-//     if (check_duplicate(arr, size))
-//         error_exit();
-
-//     // スタックAに逆順で追加
-//     int j = size - 1;
-//     while(0 <= j){
-//         push_front(&a, arr[j]);
-//         j--;
-//     }
-
-//     /* 値を順位（0..size-1）に変換 */
-//     index_stack(a, arr, size);
-
-//     if (size == 1) {
-//         /* nothing */
-//     } else if (size == 2) {
-//         if (a->value > a->next->value)
-//             sa(&a);
-//     } else if (size <= 5) {
-//         sort_small(&a, &b);
-//     } else {
-//         radix_sort(&a, &b, size);
-//     }
-
-//     free(arr);
-
-//     free_stack(&a);
-//     free_stack(&b);
-//     return 0;
-// }

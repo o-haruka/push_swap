@@ -32,12 +32,11 @@ void radix_sort(t_node **a, t_node **b, int size);
 
 // その他
 int  list_size(t_node *a);
+void	free_split_array(char **arr);
 
 // エラー処理
 void	error_exit(void);
-// void	validate_arguments(int argc, char **argv);
 int	check_args(int argc, char **argv);
-// int		has_duplicates(int *arr, int size);
 int	check_duplicate(int *args, size_t counter);
 void	free_split_array(char **arr);
 
