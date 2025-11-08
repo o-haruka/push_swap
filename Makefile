@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: homura <homura@student.42tokyo.jp>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/11/08 17:49:33 by homura            #+#    #+#              #
+#    Updated: 2025/11/08 17:49:35 by homura           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		= push_swap
 
 CC			= cc
@@ -9,6 +21,10 @@ SRC			= main.c \
 			error.c \
 			free.c \
 			stack_utils.c \
+			parse.c \
+			sort_utils.c \
+			radix_sort.c \
+
 
 SRCS		= $(addprefix $(SRC_PATH)/, $(SRC))
 
